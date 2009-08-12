@@ -1,0 +1,8 @@
+README
+
+1. Description 
+
+A modification of the RepRrap G-Code interpreter for the Arduino to use a custom I2C motor driver. 
+
+
+
