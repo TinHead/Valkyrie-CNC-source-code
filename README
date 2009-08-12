@@ -2,7 +2,15 @@ README
 
 1. Description 
 
-A modification of the RepRrap G-Code interpreter for the Arduino to use a custom I2C motor driver. 
+I wanted to build my own CNC toy to play with and this is the code I have  hacked toghether for it. 
+For more info on the machine see here: http://letsmakerobots.com/node/9006
+
+2. Contents of the repository
+
+arduino_gcode - contains the modified Arduino RepRap G-code interpreter to work with my design
+driver_code - contains the source code for the motor driver
+driver_schematic - contains the Eagle files for the motor driver
+
 
 
 
