@@ -59,15 +59,21 @@ void dda_move(long micro_delay)
 		milli_delay = micro_delay / 1000;
 	else
 		milli_delay = 0;
-        enable_stepper(x_stepper);
-        enable_stepper(y_stepper);
-        enable_stepper(z_stepper);
+        if (can_step(current_steps.x, target_steps.x, x_direction, 2)){
+                enable_stepper(x_stepper);
+        }
+        if (can_step(current_steps.y, target_steps.y, y_direction, 3)){
+                enable_stepper(y_stepper);
+        }
+        if (can_step(current_steps.z, target_steps.z, z_direction, 4)){
+                enable_stepper(z_stepper);
+        }
 	//do our DDA line!
 	do
 	{
-		x_can_step = can_step(current_steps.x, target_steps.x, x_direction);
-		y_can_step = can_step(current_steps.y, target_steps.y, y_direction);
-		z_can_step = can_step(current_steps.z, target_steps.z, z_direction);
+		x_can_step = can_step(current_steps.x, target_steps.x, x_direction, 2);
+		y_can_step = can_step(current_steps.y, target_steps.y, y_direction, 3);
+		z_can_step = can_step(current_steps.z, target_steps.z, z_direction, 4);
 
 		if (x_can_step)
 		{
@@ -131,19 +137,41 @@ void dda_move(long micro_delay)
 	calculate_deltas();
 }
 
-bool can_step(long current, long target, byte dir)
+
+/*int read_twi_val(int id)
 {
-	//stop us if we're on target
+    int c=3;
+//    Serial.println("SENDING 7 ..");
+    Wire.beginTransmission(id); // transmit to device with "id"
+    Wire.send(7);        // sends one byte  
+    Wire.endTransmission();
+    // stop transmitting
+    
+//    Serial.println("Reading ..");
+    //Wire.beginTransmission(id);
+    Wire.requestFrom(id, 1);    // request 1 byte from slave device "id"
+    while(Wire.available())    // slave may send less than requested
+    { 
+    c = Wire.receive(); // receive a byte as character
+    }
+    //Wire.endTransmission();
+    Serial.println(c);
+    return c; 
+}
+*/
+bool can_step(long current, long target, byte dir, int id)
+{
+  	//stop us if we're on target
 	if (target == current)
 		return false;
-
+  
 // not implemented yet maybe later
-/*#if ENDSTOPS_MIN_ENABLED == 1
+//#if ENDSTOPS_MIN_ENABLED == 1
 	//stop us if we're home and still going 
-	else if (read_switch(min_pin) && !dir)
-		return false;
-#endif
-
+//	else if ((read_twi_val(id)==0) && !dir)
+//		return false;
+//#endif
+/*
 #if ENDSTOPS_MAX_ENABLED == 1
 	//stop us if we're at max and still going
  	else if (read_switch(max_pin) && dir)
@@ -214,7 +242,7 @@ id 4 = Z axis
 #endif
   }
 // delay for 5 miliseconds so the motors have time to actually step
-delayMicrosecondsInterruptible(5000);  
+delayMicrosecondsInterruptible(5);  
 }
 
 /*
@@ -309,7 +337,7 @@ long calculate_feedrate_delay(float feedrate)
 	// distance / feedrate * 60000000.0 = move duration in microseconds
 	// move duration / master_steps = time between steps for master axis.
         // plus the delay for one step
-	return ((distance * 60000000.0) / feedrate / master_steps)  ;	
+	return ((distance * 60000000.0) / feedrate) / master_steps;	
 }
 
 long getMaxSpeed()
@@ -319,6 +347,8 @@ long getMaxSpeed()
 	else
 		return calculate_feedrate_delay(FAST_XY_FEEDRATE);
 }
+
+
 
 void enable_stepper(int id)
 {
@@ -377,7 +407,7 @@ void delayMicrosecondsInterruptible(unsigned int us)
 		"brne 1b" : "=w" (us) : "0" (us) // 2 cycles
 	);
 }
-
+/*
 #ifdef TEST_MACHINE
 
 // this section is just for testing the motors 
@@ -433,4 +463,4 @@ void Z_motor_test()
     delay(2000);     
 }
 
-#endif
+#endif */

@@ -61,7 +61,7 @@ byte x_direction = 1;
 byte y_direction = 1;
 byte z_direction = 1;
 
-float extruder_speed = 0;
+//float extruder_speed = 0;
 
 int scan_int(char *str, int *valp);
 int scan_float(char *str, float *valp);
@@ -487,8 +487,8 @@ void process_string(char instruction[], int size)
 				 case 2:
 				 //todo: program end
 				 break;
-				 */
 				//turn extruder on, forward
+                        */
 			case 101:
 //				ex[extruder_in_use]->set_direction(1);
 //				ex[extruder_in_use]->set_speed(extruder_speed);
@@ -551,15 +551,16 @@ void process_string(char instruction[], int size)
                                 
                                 // Close the valve
                         case 127:
-    //                            ex[extruder_in_use]->valve_set(false, (int)(gc.P + 0.5));
-                                break;
-                                                                
+//                                ex[extruder_in_use]->valve_set(false, (int)(gc.P + 0.5));
+//                                break;
+//                                                                
 
 			default:
 				Serial.print("Huh? M");
 				Serial.println(gc.M, DEC);
 		}
 	}
+
 
 }
 

@@ -14,24 +14,24 @@
 #define INCHES_TO_MM 25.4
 
 // define the parameters of our machine.
-#define X_STEPS_PER_MM   76.8
+#define X_STEPS_PER_MM   76
 #define X_STEPS_PER_INCH (X_STEPS_PER_MM*INCHES_TO_MM)
 #define X_MOTOR_STEPS    96
 #define INVERT_X_DIR 1
 
-#define Y_STEPS_PER_MM   76.8
+#define Y_STEPS_PER_MM   76
 #define Y_STEPS_PER_INCH (Y_STEPS_PER_MM*INCHES_TO_MM)
-#define Y_MOTOR_STEPS    96
+#define Y_MOTOR_STEPS   96
 #define INVERT_Y_DIR 0
 
-#define Z_STEPS_PER_MM   76.8
+#define Z_STEPS_PER_MM   76
 #define Z_STEPS_PER_INCH (Z_STEPS_PER_MM*INCHES_TO_MM)
 #define Z_MOTOR_STEPS    96
 #define INVERT_Z_DIR 1
 
 //our maximum feedrates
-#define FAST_XY_FEEDRATE 5000.0
-#define FAST_Z_FEEDRATE  3000.0
+#define FAST_XY_FEEDRATE 1000.0
+#define FAST_Z_FEEDRATE  800.0
 
 // Units in curve section
 #define CURVE_SECTION_MM 0.5
